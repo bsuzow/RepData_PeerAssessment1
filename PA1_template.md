@@ -1,6 +1,6 @@
 # Reproducible Research - Course Project 1
 
-####This report is written to analyze the data of daily steps collected from an anonymous subject during October and November 2012.  The # of steps were recorded every 5 minutes.    
+#### This report is written to analyze the data of daily steps collected from an anonymous subject during October and November 2012.  The # of steps were recorded every 5 minutes.    
 
 
   
@@ -8,7 +8,7 @@
 ## Dataset Loading and Processing
 ***  
 
-####The dataset (activity.csv) supplies 3 variables -- steps, date and interval.
+#### The dataset (activity.csv) supplies 3 variables -- steps, date and interval.
 
 
 ```r
@@ -27,7 +27,7 @@ str(dt)
 ## Total Steps Histogram  
 ***  
 
-####Let's draw the histogram for the total number of daily steps. The missing values in the steps column are  removed for this graph.  
+#### Let's draw the histogram for the total number of daily steps. The missing values in the steps column are  removed for this graph.  
 
 
 ```r
@@ -49,7 +49,7 @@ print(p1)
 ![](PA1_template_files/figure-html/hist_dailysteps-1.png)<!-- -->
 
 
-####The mean and median of the daily total steps: 
+#### The mean and median of the daily total steps: 
 
 
 
@@ -72,7 +72,7 @@ median(dtDaySteps$totSteps)
 ## Daily Activity Patterns  
 ***  
 
-####In order to ascertain the patterns of the anonymous subject, let's compute the steps average of each interval grouping. The missing values in the steps variable are removed for the computation. 
+#### In order to ascertain the patterns of the anonymous subject, let's compute the steps average of each interval grouping. The missing values in the steps variable are removed for the computation. 
 
 
 ```r
@@ -82,7 +82,7 @@ dtIntvMeans = dtIntvMeans %>% mutate(hhmm = sprintf("%04d",interval))
 dtIntvMeans = dtIntvMeans %>% mutate(hhmm = as.POSIXct(hhmm,format="%H%M"))
 ```
 
-####Plot the steps averages in every two-hour break.  The plot shows that the peak occurrs at around 8:30 am.  
+#### Plot the steps averages in every two-hour break.  The plot shows that the peak occurrs at around 8:30 am.  
 
 
 ```r
@@ -100,7 +100,7 @@ print(p2)
 
 ![](PA1_template_files/figure-html/interval_avg-1.png)<!-- -->
 
-####Let us confirm which interval accounts for the actual maximum value of the averages. It is the interval, 835 which represents 8:35 a.m. 
+#### Let us confirm which interval accounts for the actual maximum value of the averages. It is the interval, 835 which represents 8:35 a.m. 
 
 
 ```r
@@ -111,13 +111,13 @@ dtIntvMeans[which.max(dtIntvMeans$avgStepsIntv),]
 ## # A tibble: 1 x 3
 ##   interval avgStepsIntv                hhmm
 ##      <int>        <dbl>              <dttm>
-## 1      835     206.1698 2017-10-21 08:35:00
+## 1      835     206.1698 2017-10-23 08:35:00
 ```
 
 ## Imputing Missing Values  
 ***  
 
-####2304 (13%) data points of the steps variable are missing values. 
+#### 2304 (13%) data points of the steps variable are missing values. 
 
 
 ```r
@@ -144,7 +144,7 @@ sum(is.na(dt$steps))/(length(dt$steps))
 ## [1] 0.1311475
 ```
 
-####The average steps computed per interval are utilized in imputing missing values. First, join the original table (dt) and the table for the average steps by interval (dtIntvMeans).
+#### The average steps computed per interval are utilized in imputing missing values. First, join the original table (dt) and the table for the average steps by interval (dtIntvMeans).
 
 
 ```r
@@ -155,7 +155,7 @@ dt2 = inner_join(dt,dtIntvMeans)
 ## Joining, by = "interval"
 ```
 
-####Create a new variable (stepsImpu) that carries the interval average when the steps value is missing.
+#### Create a new variable (stepsImpu) that carries the interval average when the steps value is missing.
 
 
 ```r
@@ -163,7 +163,7 @@ dtImpu = dt2 %>% mutate(stepsImpu = ifelse(is.na(steps),avgStepsIntv,steps))
 dtImpu$steps = NULL  # remove the steps column
 ```
 
-####Now, let's plot a historam with the new variable (stepsImpu).
+#### Now, let's plot a historam with the new variable (stepsImpu).
 
 
 ```r
@@ -185,7 +185,7 @@ print(p3)
 
 ![](PA1_template_files/figure-html/hist_NAimputed-1.png)<!-- -->
 
-####The mean and median of the daily total steps with the imputed data are shown below. The mean of the daily total steps is the same as the one of the imputed steps data.  The medians are close enough to each other (10765 vs 10766).   
+#### The mean and median of the daily total steps with the imputed data are shown below. The mean of the daily total steps is the same as the one of the imputed steps data.  The medians are close enough to each other (10765 vs 10766).   
 
 
 ```r
@@ -207,9 +207,9 @@ median(dtDayStepsImputed$totSteps)
 ## Activity Patterns Comparison - Weekdays vs. Weekends  
 ***  
 
-####Are the activity patterns on weekdays different from on weekends?  
+#### Are the activity patterns on weekdays different from on weekends?  
 
-#####To answer this question:  
+##### To answer this question:  
 
 - Each date is labeled with a factor variable (dayLabel).  
 - Plot the steps interval averages in two panels.  
